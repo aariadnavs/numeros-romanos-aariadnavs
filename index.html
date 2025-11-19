@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Conversor de Números Romanos ↔ Arábigos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Conversor Romano ↔ Arábigo</h1>
+    <p>Convierte números romanos a arábigos y viceversa de forma rápida y sencilla.</p>
+  </header>
+
+  <main>
+    <section class="converter">
+      <label for="valor">Ingresa un valor:</label>
+      <input id="valor" type="text" placeholder="Ej: XIV o 2025">
+
+      <label for="tipo">Selecciona el tipo de conversión:</label>
+      <select id="tipo">
+        <option value="romano">Romano → Arábigo</option>
+        <option value="arabigo">Arábigo → Romano</option>
+      </select>
+
+      <button id="convertir">Convertir</button>
+
+      <div id="resultado" class="resultado"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Proyecto TP3 · Desplegado en Vercel</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
