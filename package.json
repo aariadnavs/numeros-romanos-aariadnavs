@@ -1,9 +1,23 @@
 {
+  "name": "numeros-romanos",
+  "version": "1.0.0",
+  "description": "Conversor de números romanos ↔ arábigos con frontend y backend desplegado en Vercel",
+  "type": "module",
+  "main": "romanos.js",
   "scripts": {
-    "test": "jest",
-    "coverage": "jest --coverage"
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js",
+    "coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage",
+    "start": "vercel dev"
   },
-  "dependencies": {},
+  "keywords": [
+    "romanos",
+    "arabigos",
+    "conversor",
+    "jest",
+    "vercel"
+  ],
+  "author": "Ariadna",
+  "license": "MIT",
   "devDependencies": {
     "jest": "^29.0.0"
   }
