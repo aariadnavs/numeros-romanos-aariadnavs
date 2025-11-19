@@ -1,21 +1,10 @@
 {
-  "name": "tateti-random",
-  "version": "1.0.0",
-  "main": "tateti-random.js",
   "scripts": {
-    "start": "node tateti-random.js",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --coverage"
   },
-  "dependencies": {
-    "express": "^4.18.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "jest": "^29.7.0"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/.vercel/"
-    ]
+    "jest": "^29.0.0"
   }
 }
