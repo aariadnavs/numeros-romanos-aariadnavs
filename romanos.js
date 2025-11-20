@@ -1,48 +1,14 @@
-﻿// Mapa de valores romanos
-const valoresRomanos = {
-  I: 1, V: 5, X: 10, L: 50,
-  C: 100, D: 500, M: 1000
-};
-
-// Orden de símbolos para validación
-const simbolosValidos = Object.keys(valoresRomanos);
-
-// Función: Romano → Arábigo
-function romanoAArabigo(romano) {
-  if (typeof romano !== "string") {
-    throw new Error("Entrada inválida: se esperaba un número romano en texto.");
-  }
-
-  const entrada = romano.toUpperCase().trim();
-
-  if (!/^[IVXLCDM]+$/.test(entrada)) {
-    throw new Error("Error: el valor ingresado no parece ser un número romano válido.");
-  }
-
-  let total = 0;
-  let anterior = 0;
-
-  for (let i = entrada.length - 1; i >= 0; i--) {
-    const actual = valoresRomanos[entrada[i]];
-    if (actual < anterior) {
-      total -= actual;
-    } else {
-      total += actual;
-      anterior = actual;
-    }
-  }
-
-  return total;
-}
-
-// Función: Arábigo → Romano
-function arabigoARomano(numero) {
-  if (typeof numero !== "number" || !Number.isInteger(numero)) {
+﻿// Convierte número arábigo a romano
+export function convertirArabigoARomano(num) {
+  // Validaciones
+  if (typeof num !== "number") {
     throw new Error("Entrada inválida: se esperaba un número entero.");
   }
-
-  if (numero < 1 || numero > 3999) {
-    throw new Error("Error: el número debe estar entre 1 y 3999.");
+  if (!Number.isInteger(num)) {
+    throw new Error("Entrada inválida: se esperaba un número entero.");
+  }
+  if (num < 1 || num > 3999) {
+    throw new Error("Error");
   }
 
   const valores = [
@@ -58,21 +24,48 @@ function arabigoARomano(numero) {
     { valor: 9, simbolo: "IX" },
     { valor: 5, simbolo: "V" },
     { valor: 4, simbolo: "IV" },
-    { valor: 1, simbolo: "I" }
+    { valor: 1, simbolo: "I" },
   ];
 
   let resultado = "";
-  let restante = numero;
-
-  for (const item of valores) {
-    while (restante >= item.valor) {
-      resultado += item.simbolo;
-      restante -= item.valor;
+  for (const { valor, simbolo } of valores) {
+    while (num >= valor) {
+      resultado += simbolo;
+      num -= valor;
     }
   }
-
   return resultado;
 }
 
-// Exportar funciones
-export { romanoAArabigo, arabigoARomano };
+// Convierte número romano a arábigo (acepta mayúsculas y minúsculas)
+export function convertirRomanoAArabigo(roman) {
+  // Validación de tipo
+  if (typeof roman !== "string") {
+    throw new Error("Entrada inválida: se esperaba un número romano en texto.");
+  }
+
+  const mapa = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 };
+  const cadena = roman.toUpperCase();
+
+  let total = 0;
+  for (let i = 0; i < cadena.length; i++) {
+    const actual = mapa[cadena[i]];
+    const siguiente = mapa[cadena[i+1]];
+
+    if (!actual) {
+      return NaN; // símbolo inválido
+    }
+
+    if (siguiente && actual < siguiente) {
+      total -= actual;
+    } else {
+      total += actual;
+    }
+  }
+  return total;
+}
+
+// Valida si un número romano es correcto (acepta mayúsculas y minúsculas)
+export function esRomanoValido(roman) {
+  return /^[IVXLCDM]+$/i.test(roman);
+}
