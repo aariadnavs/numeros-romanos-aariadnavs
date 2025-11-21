@@ -1,56 +1,65 @@
-﻿# Tateti Random
+﻿# Conversor de Números Romanos
 
-API sencilla en Node.js que devuelve un movimiento aleatorio para un tablero de ta-te-ti.
+Aplicación web y API para convertir números arábigos a números romanos (y viceversa) con validaciones estrictas.
 
-## Requisitos previos
-- Node.js 18 o superior.
-- Cuenta en Vercel con un proyecto (puede ser creado desde el dashboard o con el comando vercel link).
-- Acceso de administrador al repositorio en GitHub para crear *secrets*.
+## Características del programa
+
+- ✅ Conversión de arábigo a romano (1–3999)
+- ✅ Conversión de romano a arábigo (validando gramática)
+- ✅ API pública desplegada en Vercel (/a2r y /r2a)
+- ✅ Validaciones de errores (formato inválido, repeticiones excesivas, rango incorrecto)
+- ✅ Tests unitarios con Jest para asegurar calidad
 
 ## Instalacion local
-1. Clonar el repositorio y situarse en la raiz.
-2. Instalar las dependencias con `npm install`.
-3. Ejecutar la bateria de pruebas con `npm test`.
-4. Levantar el servidor local con `npm start` y consumir el endpoint `GET /move?board=[...]`.
+1. Clonar el repositorio
+   `git clone` https://github.com/aariadnavs/numeros-romanos-aariadnavs.git
+3. Instalar las dependencias con `npm install`.
+4. Ejecutar en local (con servidor dev).
+   `npm run dev`
+6. Correr los tests
+   `npm test`
 
-## Despliegue continuo en Vercel
-Cada *push* a la rama `main` ejecuta el flujo definido en `.github/workflows/deploy-vercel.yml`. Este flujo instala dependencias, corre las pruebas y despliega en Vercel usando la CLI oficial. Para que funcione, sigue estos pasos una sola vez:
+## Uso de la API
+Ejemplos de endpoints:
+- *Arábigo → Romano*
 
-### 1. Autenticarse y vincular el proyecto en Vercel
-```bash
-npm install --global vercel    (este paso instala vecel en tu máquina)
-vercel login  (este paso pide que hagas ENTER. Con eso te abre un browser y espera a que lo autorices)
-vercel link
-```
-El comando `vercel link` crea la carpeta `.vercel/` (no la subas al repositorio) con el archivo `project.json` que contiene `orgId` y `projectId`.
+GET https://tu-app.vercel.app/a2r?arabic=2025
+Response: { "roman": "MMXXV" }
 
-### 2. Crear un token de acceso
-Genera un token permanente con `vercel tokens create tateti-ci` o desde el dashboard (Account Settings > Tokens). 
-Yo lo creé con scope completo, y sin expirar. Lo guardé en un archivo .private que no se sube al git
-Guarda el valor; solo se muestra una vez.
+- Romano → Arábigo
 
-### 3. Configurar *GitHub Secrets*
-En GitHub entra a **Settings > Secrets and variables > Actions** y agrega los siguientes secretos:
-- `VERCEL_TOKEN`: el token generado en el paso anterior.
-- `VERCEL_ORG_ID`: valor `orgId` del archivo `.vercel/project.json`.
-- `VERCEL_PROJECT_ID`: valor `projectId` del archivo `.vercel/project.json`.
+GET https://tu-app.vercel.app/r2a?roman=MMXXV
+Response: { "arabic": 2025 }
+ 
+- Errores
 
-Si tu aplicacion necesita variables de entorno, definalas en Vercel (`vercel env add` o desde el dashboard) o agrega pasos adicionales en el workflow.
+GET /a2r?arabic=12abc
+Response: { "error": "Número inválido" }
 
-### 4. Disparar el workflow a mano (no debería hacer falta con GitHub Actions)
-Con los secretos configurados, haz *push* a `main`. GitHub Actions ejecuta:
-1. `npm ci`
-2. `npm test`
-3. `npx vercel pull --yes --environment=production`
-4. `npx vercel build --prod`
-5. `npx vercel deploy --prebuilt --prod`
 
-Al finalizar vas a ver la URL de despliegue en la pestana **Actions** del repositorio y en el dashboard de Vercel.
+## Frontend
 
-## Personalizacion
-- Para desplegar desde otra rama, cambia la seccion `on.push.branches` del workflow.
-- Si deseas saltar las pruebas antes de desplegar, elimina el paso "Run tests" en el YAML.
+- Interfaz simple en index.html + script.js para probar las conversiones.
+- Diseño con paleta fría, accesible y dinámica para el ojo humano y los usuarios.
 
-## Scripts utiles
-- `npm start`: inicia el servidor.
-- `npm test`: ejecuta Jest.
+
+## Tests
+
+- Framework: Jest
+- Cobertura:
+- Conversión correcta de números válidos
+- Manejo de minúsculas/mayúsculas
+- Errores en entradas inválidas (IIII, MMMCMMM, 12abc, etc.)
+
+
+## Despliegue
+
+- Plataforma: Vercel
+- Configuración: vercel.json con rewrites para /a2r y /r2a.
+
+# Proyecto desarrollado por Ariadna Santillan
+
+<img width="1919" height="1032" alt="imagen" src="https://github.com/user-attachments/assets/f62c2d11-5c90-4189-bca5-0873b199a8b1" />
+
+
+
