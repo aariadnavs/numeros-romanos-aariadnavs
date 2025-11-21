@@ -7,10 +7,14 @@ export default function handler(req, res) {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
   const { arabic } = req.query;
-  const num = parseInt(arabic, 10);
 
-  // Validación
-  if (!arabic || isNaN(num) || num < 1 || num > 3999) {
+  // Validación estricta: solo dígitos
+  if (!arabic || !/^\d+$/.test(arabic)) {
+    return res.status(400).json({ error: "Número inválido" });
+  }
+
+  const num = Number(arabic);
+  if (num < 1 || num > 3999) {
     return res.status(400).json({ error: "Número inválido" });
   }
 

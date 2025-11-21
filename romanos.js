@@ -1,16 +1,5 @@
-﻿// Convierte número arábigo a romano
+﻿// Conversión de arábigo a romano
 export function convertirArabigoARomano(num) {
-  // Validaciones
-  if (typeof num !== "number") {
-    throw new Error("Entrada inválida: se esperaba un número entero.");
-  }
-  if (!Number.isInteger(num)) {
-    throw new Error("Entrada inválida: se esperaba un número entero.");
-  }
-  if (num < 1 || num > 3999) {
-    throw new Error("Error");
-  }
-
   const valores = [
     { valor: 1000, simbolo: "M" },
     { valor: 900, simbolo: "CM" },
@@ -24,7 +13,7 @@ export function convertirArabigoARomano(num) {
     { valor: 9, simbolo: "IX" },
     { valor: 5, simbolo: "V" },
     { valor: 4, simbolo: "IV" },
-    { valor: 1, simbolo: "I" },
+    { valor: 1, simbolo: "I" }
   ];
 
   let resultado = "";
@@ -37,27 +26,18 @@ export function convertirArabigoARomano(num) {
   return resultado;
 }
 
-// Convierte número romano a arábigo (acepta mayúsculas y minúsculas)
+// Conversión de romano a arábigo
 export function convertirRomanoAArabigo(roman) {
-  // Validación de tipo
-  if (typeof roman !== "string") {
-    throw new Error("Entrada inválida: se esperaba un número romano en texto.");
-  }
-
-  const mapa = { I:1, V:5, X:10, L:50, C:100, D:500, M:1000 };
-  const cadena = roman.toUpperCase();
-
+  const valores = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
   let total = 0;
-  for (let i = 0; i < cadena.length; i++) {
-    const actual = mapa[cadena[i]];
-    const siguiente = mapa[cadena[i+1]];
 
-    if (!actual) {
-      return NaN; // símbolo inválido
-    }
+  for (let i = 0; i < roman.length; i++) {
+    const actual = valores[roman[i]];
+    const siguiente = valores[roman[i + 1]];
 
     if (siguiente && actual < siguiente) {
-      total -= actual;
+      total += siguiente - actual;
+      i++;
     } else {
       total += actual;
     }
@@ -65,7 +45,8 @@ export function convertirRomanoAArabigo(roman) {
   return total;
 }
 
-// Valida si un número romano es correcto (acepta mayúsculas y minúsculas)
+// Validación estricta de números romanos
 export function esRomanoValido(roman) {
-  return /^[IVXLCDM]+$/i.test(roman);
+  const regex = /^(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/i;
+  return regex.test(roman);
 }

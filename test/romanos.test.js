@@ -76,4 +76,15 @@ describe("esRomanoValido", () => {
   test("Rechaza números arábigos", () => {
     expect(esRomanoValido("123")).toBe(false);
   });
+  test("Rechaza repeticiones excesivas como IIII", () => {
+    expect(esRomanoValido("IIII")).toBe(false);
+  });
+
+  test("Rechaza estructura inválida como MMMCMMM", () => {
+    expect(esRomanoValido("MMMCMMM")).toBe(false);
+  });
+
+  test("Rechaza mezcla de letras y números como 12abc", () => {
+     expect(esRomanoValido("12abc")).toBe(false);
+  });
 });
