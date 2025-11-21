@@ -1,5 +1,13 @@
 ﻿// Conversión de arábigo a romano
 export function convertirArabigoARomano(num) {
+  // Validaciones de tipo y rango
+  if (typeof num !== "number" || !Number.isInteger(num)) {
+    throw new Error("Entrada inválida: se esperaba un número entero.");
+  }
+  if (num < 1 || num > 3999) {
+    throw new Error("Error");
+  }
+
   const valores = [
     { valor: 1000, simbolo: "M" },
     { valor: 900, simbolo: "CM" },
@@ -28,12 +36,23 @@ export function convertirArabigoARomano(num) {
 
 // Conversión de romano a arábigo
 export function convertirRomanoAArabigo(roman) {
+  // Validación de tipo
+  if (typeof roman !== "string") {
+    throw new Error("Entrada inválida: se esperaba un número romano en texto.");
+  }
+
+  // Normalizar a mayúsculas
+  roman = roman.toUpperCase();
+
   const valores = { I: 1, V: 5, X: 10, L: 50, C: 100, D: 500, M: 1000 };
   let total = 0;
 
   for (let i = 0; i < roman.length; i++) {
     const actual = valores[roman[i]];
     const siguiente = valores[roman[i + 1]];
+
+    // Si hay un carácter inválido, devolver NaN
+    if (!actual) return NaN;
 
     if (siguiente && actual < siguiente) {
       total += siguiente - actual;
