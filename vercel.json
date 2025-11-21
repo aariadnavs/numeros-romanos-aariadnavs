@@ -1,0 +1,14 @@
+{
+  "redirects": [
+    {
+      "source": "/a2r",
+      "destination": "/api/a2r",
+      "permanent": true
+    },
+    {
+      "source": "/r2a",
+      "destination": "/api/r2a",
+      "permanent": true
+    }
+  ]
+}
