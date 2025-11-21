@@ -1,14 +1,12 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/a2r",
-      "destination": "/api/a2r",
-      "permanent": true
+      "destination": "/api/a2r"
     },
     {
       "source": "/r2a",
-      "destination": "/api/r2a",
-      "permanent": true
+      "destination": "/api/r2a"
     }
   ]
 }
